@@ -4,7 +4,6 @@ public class Customer {
 
     public Customer() {
         this.isValidCpf = false;
-
     }
 
     private String id;
