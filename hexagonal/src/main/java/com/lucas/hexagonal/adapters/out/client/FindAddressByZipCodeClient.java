@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
         name =  "FindAdressByZipCodeClient",
         url = "${lucas,client.adress.url}"
 )
-public interface FindAdressByZipCodeClient {
+public interface FindAddressByZipCodeClient {
 
     @GetMapping("/{zipCode}")
     AddressResponse find(@PathVariable("zipCode") String zipCode);
