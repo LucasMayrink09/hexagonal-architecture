@@ -4,6 +4,7 @@ import com.lucas.hexagonal.adapters.in.controller.mapper.CustomerMapper;
 import com.lucas.hexagonal.adapters.in.controller.request.CustomerRequest;
 import com.lucas.hexagonal.adapters.in.controller.response.CustomerResponse;
 import com.lucas.hexagonal.application.core.domain.Customer;
+import com.lucas.hexagonal.application.ports.in.DeleteCustomerByIdInputPort;
 import com.lucas.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.lucas.hexagonal.application.ports.in.InsertCustomerInputPort;
 import com.lucas.hexagonal.application.ports.in.UpdateCustomerInputPort;
@@ -28,6 +29,9 @@ public class CustomerController {
     @Autowired
     private UpdateCustomerInputPort updateCustomerInputPort;
 
+    @Autowired
+    private DeleteCustomerByIdInputPort deleteCustomerByIdInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
         var customer = customerMapper.toCostumer(customerRequest);
@@ -48,6 +52,12 @@ public class CustomerController {
         Customer customer = customerMapper.toCostumer(customerRequest);
         customer.setId(id);
         updateCustomerInputPort.update(customer, customerRequest.getZipCode());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id) {
+        deleteCustomerByIdInputPort.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
